@@ -24,7 +24,9 @@ do
 	if [ $environment == 'KDE' ]
 	then
 
-		distro_packages='i3-default-artwork i3-gaps i3-help i3-scripts i3exit i3lock i3status-manjaro artwork-i3 conky-i3 perl-anyevent-i3 dmenu-manjaro rofi xfce4-terminal pamac'  
+		distro_packages='i3-default-artwork i3-gaps i3-help 
+i3-scripts i3exit i3lock i3status-manjaro artwork-i3 conky-i3 
+perl-anyevent-i3 dmenu-manjaro rofi xfce4-terminal pamac nitrogen'  
 		for package in $distro_packages
 		do
 			if [ ! $(sudo pacman -Qi $package > /dev/null) ]
