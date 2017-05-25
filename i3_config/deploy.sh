@@ -24,31 +24,34 @@ do
 	if [ $environment == 'KDE' ]
 	then
 
-		distro_packages='i3-default-artwork i3-gaps i3-help i3-scripts i3exit i3lock i3status-manjaro artwork-i3 conky-i3 perl-anyevent-i3 dmenu-manjaro rofi xfce4-terminal'  
+		distro_packages='i3-default-artwork i3-gaps i3-help i3-scripts i3exit i3lock i3status-manjaro artwork-i3 conky-i3 perl-anyevent-i3 dmenu-manjaro rofi xfce4-terminal pamac'  
 		for package in $distro_packages
 		do
-			if [ ! pacman -Qi $package > /dev/null ]
+			if [ ! $(sudo pacman -Qi $package > /dev/null) ]
 			then
 				to_install=${to_install:+$to_install }$package
 			fi
 		done	
-		pacman -S --noconfirm $to_install
+		sudo pacman -S --noconfirm $to_install
 
-		AUR_packages='unclutter-xfixes-git'
-		for package in AUR_packages
+		AUR_packages='unclutter-xfixes-git micro google-chrome vivaldi'
+		for package in $AUR_packages
 		do
-			if [ ! pacman -Qi $package ]
+			if [ ! $(sudo pacman -Qi $package > /dev/null) ]
 			then
 				to_install=${to_install:+$to_install }$package
 			fi
 		done
-		yaourt -Syua --noconfirm $to_install
+		sudo yaourt -Syua --noconfirm $to_install
 		
 		safe_copy i3_kde set_window_manager.sh ~/.config/plasma-workspace/env
 		 
 		safe_copy xfce4_terminal terminalrc ~/.config/xfce4/terminal
 
 		safe_copy bash .bashrc ~
+		
+		git config --global user.email "awheeler294@gmail.com"
+		git config --global user.name "awheeler294"
 		
 		for file in $( ls i3_kde/i3_files )
 		do
@@ -57,7 +60,7 @@ do
 		
 		for file in $( ls xfce4_terminal/color_schemes )
 		do
-			safe_copy xfce4_terminal/xfce4_color_schemes $file ~/.local/share/xfce4/terminal/colorschemes/
+			safe_copy xfce4_terminal/color_schemes $file ~/.local/share/xfce4/terminal/colorschemes
 		done
 		
 		break
